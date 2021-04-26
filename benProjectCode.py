@@ -161,16 +161,6 @@ print("Accuracy: " + str(correctCnt) + "/" + str(n) + " = " + str(round(100*corr
 
 
 
-#analogy_scores = model.evaluate_word_analogies('C:/Users/benu4/Documents/CAPSTONE/questions-words.txt')
-#print(analogy_scores)
-
-print(model.most_similar(negative=["Ohio"], positive=["Columbus","Alaska"]))
-print(model.most_similar(negative=["England"], positive=["London","Germany"]))
-print(analogyN("America","English","Mexico",5))
-print(analogyN("England","London","Malta",5))
-print(analogyN("ostrich","bird","lion",5))
-model['England']
-
 
 
 print(list(gensim.downloader.info()['models'].keys()))
