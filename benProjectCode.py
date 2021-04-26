@@ -82,13 +82,11 @@ capital_dic={
     'Wisconsin': 'Madison',
     'Wyoming': 'Cheyenne'  
 }
+
 #Returns the top word that solves (returns d in) the following analogy given a,b,c a:b::c:d
 def analogy(wordOne, wordTwo, wordThree):
     return model.most_similar(negative=[wordOne], positive=[wordTwo, wordThree],topn=1)[0][0]
-  
-print("England:London :: Vietnam:" + analogy("England","London","Vietnam")) 
-print(analogyN("England","London","Australia",5))   
-  
+    
 #Gives the top arbitrary number of words to an arbitrary degree
 def analogyN(wordOne, wordTwo, wordThree,n):
     array=model.most_similar(negative=[wordOne], 
@@ -98,8 +96,12 @@ def analogyN(wordOne, wordTwo, wordThree,n):
         ret=ret + ", " + array[i][0]
     return ret
 
+#Uses the vector definitions of words and returns top Five
+#Not used
 def vectorAnalogy(wordOne,wordTwo,wordThree):
     return model.most_similar(positive=[model[wordTwo]-model[wordOne]+model[wordThree]],topn=5)
+
+#Helper method
 def numWords(word):
     return len(word.split())
 
@@ -383,5 +385,6 @@ display_scatterplot(model,w)
 
 
 
-
+print("England:London :: Vietnam:" + analogy("England","London","Vietnam")) 
+print(analogyN("England","London","Australia",5))   
 
