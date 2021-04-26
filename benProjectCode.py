@@ -205,7 +205,7 @@ def TSNE_reduction(words):
 
 #Plots a 2D scatterplot of words using either PCA or TSNE
 #Can set a custome label
-def display_scatterplot(model, words,type="pca", label=""):
+def display_scatterplot(model, words,type="pca", label="",lines=False):
     word_vectors = np.array([model[w] for w in words])
     if(type == "tsne"):
         twodim = TSNE_reduction(word_vectors)  
@@ -239,8 +239,9 @@ def display_scatterplot(model, words,type="pca", label=""):
             plt.text(x+.005,y+.005,word,**hfont)
     
     #Draw lines between word projections that are adjacent in the words matrix
-    #for i in range(0,len(words),2):
-    #    plt.plot([twodim[i,0],twodim[i+1,0]],[twodim[i,1],twodim[i+1,1]],color='k')
+    if(lines):
+        for i in range(0,len(words),2):
+            plt.plot([twodim[i,0],twodim[i+1,0]],[twodim[i,1],twodim[i+1,1]],color='k')
     
     plt.show()
 
@@ -254,6 +255,7 @@ def display_pca_scatterplot3D(model, words):
     ax.scatter(threeDim[:,0],threeDim[:,1],threeDim[:,2])
 
 
+#Can be used to plot a scatterplot of various words
 words=[]
 print(words)
 n=0
