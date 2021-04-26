@@ -6,19 +6,14 @@ Spyder Editor
 """
 from gensim.test.utils import common_texts
 from gensim.models import Word2Vec
-from gensim.models import KeyedVectors
-from gensim.corpora import WikiCorpus
 import gensim.downloader
-from colorama import init
 from termcolor import colored
 import matplotlib.pyplot as plt
-import matplotlib.colors as colors
 import numpy as np
 from sklearn.decomposition import PCA
-from matplotlib.font_manager import FontProperties
-from matplotlib.ticker import AutoMinorLocator
 from sklearn.manifold import TSNE
 
+#Contains various obscure countries and their capitals
 country_capital_dic={
     'Uganda': 'Kampala',
     'Gambia': 'Banjul',
@@ -34,6 +29,7 @@ country_capital_dic={
 }
 
 
+#Contains states and their capitals as key/value pairs
 capital_dic={
     'Alabama': 'Montgomery',
     'Alaska': 'Juneau',
