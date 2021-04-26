@@ -203,7 +203,9 @@ def TSNE_reduction(words):
     return TSNE(random_state=0, perplexity = 3, learning_rate = 1000, n_iter = 10000).fit_transform(words)[:,:2]
 
 
-def display_scatterplot(model, words,type="pca"):
+#Plots a 2D scatterplot of words using either PCA or TSNE
+#Can set a custome label
+def display_scatterplot(model, words,type="pca", label=""):
     word_vectors = np.array([model[w] for w in words])
     if(type == "tsne"):
         twodim = TSNE_reduction(word_vectors)  
@@ -216,7 +218,9 @@ def display_scatterplot(model, words,type="pca"):
         plt.title("Visualization of word vectors through t-SNE", **hfont)
     else:
         #plt.title("PCA Dimensional Reduction of Country/Capital Word Pair Relationships", **hfont)
-        plt.title("Visualization of Country Vectors through PCA")
+        plt.title("Visualization of Country Vectors through PCA", **hfont)
+    if(not label==""):
+        plt.title(label,**hfont)
     plt.scatter(twodim[:,0], twodim[:,1], edgecolors='k', c='w') #k is black (b -> blue)
     plt.xlabel("Underwood, 2021", **hfont,loc='center')
     
@@ -224,17 +228,20 @@ def display_scatterplot(model, words,type="pca"):
     plt.gca().axes.get_xaxis().set_ticklabels([])
     plt.gca().axes.get_yaxis().set_ticklabels([])
     
-    #Add grid that has the good colors
+    #Add grid lines
     plt.gca().axes.grid(linestyle='--')
-    #plt.gca().axes.grid(color = 'green', linestyle = '--', linewidth = 2)
     
+    #Add labels for the words using proper distances
     for word, (x,y) in zip(words, twodim):
         if(type=="tsne"):
             plt.text(x+7, y+7, word,**hfont)
         else:
             plt.text(x+.005,y+.005,word,**hfont)
+    
+    #Draw lines between word projections that are adjacent in the words matrix
     #for i in range(0,len(words),2):
     #    plt.plot([twodim[i,0],twodim[i+1,0]],[twodim[i,1],twodim[i+1,1]],color='k')
+    
     plt.show()
 
 def display_pca_scatterplot3D(model, words):
@@ -315,40 +322,18 @@ model.similarity("hideous","ghastly")
 adjectives=["car","cars","leaf","leaves","knife","knives","table","tables","bag","bags","truck","trucks"]
 display_scatterplot(model,adjectives)
 
-word="funny"
-syn=model.most_similar(word)
-for i in range(10):
-    print(str(i+1) + ":\t" + syn[i][0])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 #Develop a thesaurus 
-
-
 import pandas as pd
 df = pd.read_excel('Documents/CAPSTONE/words.xlsx') #Open the excel document
-adjectives = df['personality'] #Select the row
+adjectives = df['personality'] #Select the correct column
 thesaurus=[]
 for i in range(len(adjectives)):
     temp=[adjectives[i].title()]
-    #Select top 20 as processing my lower down to 10 or fewer
+    #Select top 20 as post-processing my lower down to 10 or fewer
     synonyms=model.most_similar(adjectives[i],topn=20)
     cnt=0
     for n in range(20):
@@ -364,6 +349,11 @@ df.to_excel(excel_writer = "Documents/CAPSTONE/thesaurus.xlsx")
 
 
 
+#Random analogie and code
+word="funny"
+syn=model.most_similar(word)
+for i in range(10):
+    print(str(i+1) + ":\t" + syn[i][0])
 
 print(analogyN("Facebook","Zuckerberg","Amazon",5))
 syn=model.most_similar("bossy",topn=10)
