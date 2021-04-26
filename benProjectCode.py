@@ -231,7 +231,7 @@ def display_scatterplot(model, words,type="pca", label="",lines=False):
     #Add grid lines
     plt.gca().axes.grid(linestyle='--')
     
-    #Add labels for the words using proper distances
+    #Add labels for the words using "proper" distances
     for word, (x,y) in zip(words, twodim):
         if(type=="tsne"):
             plt.text(x+7, y+7, word,**hfont)
@@ -245,6 +245,7 @@ def display_scatterplot(model, words,type="pca", label="",lines=False):
     
     plt.show()
 
+#Plots a non-interactive 3D projection
 def display_pca_scatterplot3D(model, words):
     word_vectors = np.array([model[w] for w in words])
     pca=PCA(n_components=3)
